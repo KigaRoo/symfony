@@ -136,7 +136,8 @@ class Controller extends ContainerAware
      */
     public function createFormBuilder($data = null, array $options = array())
     {
-        return $this->container->get('form.factory')->createBuilder('form', $data, $options);
+        builder= $this->container->get('form.factory')->createBuilder('form', $data, $options);
+        return  $builder;
     }
 
     /**
