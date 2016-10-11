@@ -36,7 +36,6 @@ class Controller extends ContainerAware
      * @param $route
      * @param mixed $parameters An array of parameters
      * @param Boolean $absolute Whether to generate an absolute URL
-     *
      * @return string The generated URL
      */
     public function generateUrl($route, $parameters = array(), $absolute = false)
