@@ -167,22 +167,45 @@ class DelegatingValidator implements FormValidatorInterface
 
             $nestedNamePath = $namePath.'.'.$child->getName();
 
+//            if ($child->hasChildren() || isset($parts[1])) {
+//                $nestedFormPath = $formPath.'['.trim($parts[0], '[]').']';
+//            }
+//            else {
+//                $nestedFormPath = $formPath.'.data.'.$parts[0];
+//            }
+//
+//            if (isset($parts[1])) {
+//                $nestedFormPath .= '.data.'.$parts[1];
+//            }
+//
+//            if ($child->hasChildren()) {
+//                $this->buildFormPathMapping($child, $mapping, $nestedFormPath, $nestedNamePath);
+//            }
+//
+//            $mapping['/^'.preg_quote($nestedFormPath, '/').'(?!\w)/'] = $child;
+
+            # BUGFIX (by norman winzer)
+            # ensures proper error bubbling on forms
+            # fixed in symfony 2.1
+            # more info: https://github.com/tamirvs/symfony/commit/cd136d09e841fd40c396846fc6e346c7f1a1b7be or
+            # https://github.com/symfony/symfony/issues/1917
+
+            $nestedFormPropertyPath = $formPath.'.data.'.$parts[0];
+            $mapping['/^'.preg_quote($nestedFormPropertyPath, '/').'(?!\w)/'] = $child;
+
             if ($child->hasChildren() || isset($parts[1])) {
                 $nestedFormPath = $formPath.'['.trim($parts[0], '[]').']';
-            }
-            else {
-                $nestedFormPath = $formPath.'.data.'.$parts[0];
-            }
 
-            if (isset($parts[1])) {
-                $nestedFormPath .= '.data.'.$parts[1];
-            }
+                if (isset($parts[1])) {
+                    $nestedFormPath .= '.data.'.$parts[1];
+                }
 
-            if ($child->hasChildren()) {
-                $this->buildFormPathMapping($child, $mapping, $nestedFormPath, $nestedNamePath);
-            }
+                if ($child->hasChildren()) {
+                    $this->buildFormPathMapping($child, $mapping, $nestedFormPath, $nestedNamePath);
+                }
 
-            $mapping['/^'.preg_quote($nestedFormPath, '/').'(?!\w)/'] = $child;
+                $mapping['/^'.preg_quote($nestedFormPath, '/').'(?!\w)/'] = $child;
+            }
         }
     }
 

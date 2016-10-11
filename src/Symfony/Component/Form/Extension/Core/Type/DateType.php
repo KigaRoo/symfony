@@ -57,7 +57,7 @@ class DateType extends AbstractType
             \Locale::getDefault(),
             $format,
             \IntlDateFormatter::NONE,
-            \DateTimeZone::UTC,
+            'UTC', //see https://github.com/symfony/symfony/pull/8643
             \IntlDateFormatter::GREGORIAN,
             $pattern
         );

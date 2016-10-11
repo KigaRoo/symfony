@@ -72,7 +72,7 @@ class MessageSelector
 
         $position = PluralizationRules::get($number, $locale);
         if (!isset($standardRules[$position])) {
-            throw new \InvalidArgumentException('Unable to choose a translation.');
+            throw new \InvalidArgumentException('Unable to choose a translation for position '.print_r($position).'|'.$number.'|'.$message);
         }
 
         return $standardRules[$position];

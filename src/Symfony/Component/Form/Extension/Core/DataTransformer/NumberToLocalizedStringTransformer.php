@@ -104,6 +104,24 @@ class NumberToLocalizedStringTransformer implements DataTransformerInterface
         }
 
         $formatter = $this->getNumberFormatter();
+
+        /*********************
+         * Applying Symfony2 patch: https://github.com/symfony/symfony/commit/9122260df92f276ddbabb76be427662afdb1a5d1
+         */
+        $groupSep = $formatter->getSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL);
+        $decSep = $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL);
+
+        if ('.' !== $decSep && (!$this->grouping || '.' !== $groupSep)) {
+            $value = str_replace('.', $decSep, $value);
+        }
+
+        if (',' !== $decSep && (!$this->grouping || ',' !== $groupSep)) {
+            $value = str_replace(',', $decSep, $value);
+        }
+        /*********************
+         * End Symfony2 Patch
+         */
+
         $value = $formatter->parse($value);
 
         if (intl_is_failure($formatter->getErrorCode())) {

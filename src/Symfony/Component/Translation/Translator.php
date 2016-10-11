@@ -120,6 +120,8 @@ class Translator implements TranslatorInterface
             $locale = $this->getLocale();
         }
 
+        $locale = (string) $locale;
+
         if (!isset($this->catalogues[$locale])) {
             $this->loadCatalogue($locale);
         }

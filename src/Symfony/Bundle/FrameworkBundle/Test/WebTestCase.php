@@ -14,6 +14,7 @@ namespace Symfony\Bundle\FrameworkBundle\Test;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * WebTestCase is the base class for functional tests.
@@ -23,6 +24,10 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 abstract class WebTestCase extends \PHPUnit_Framework_TestCase
 {
     static protected $class;
+
+    /**
+     * @var Kernel
+     */
     static protected $kernel;
 
     /**
